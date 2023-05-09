@@ -9,11 +9,11 @@ export class Database{
     constructor(){
 
         this.connection = mysql.createConnection({
-            host: "127.0.0.1",
+            host: "rwo5jst0d7dgy0ri.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
             port:3306,
-            user: "root",
-            password: 'Kenyalove817678!',
-            database:'test'
+            user: "r7i2e43yy8vzbq1x",
+            password: 'min7fodpcs3mxupk',
+            database:'vsmbuz30aj85kgfp'
         });
         
         this.connection.connect(function(err) {
