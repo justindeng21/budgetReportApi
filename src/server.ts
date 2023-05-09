@@ -34,7 +34,7 @@ export class monthlyBudgetTable extends Database{
         return this._query(query)
     }
 
-    getMonthlyTransactions(){
+    queryMonthlyTransactions(){
         var datetime = new Date();
         var startDate = new Date(datetime.getFullYear(), datetime.getMonth(), 1).toISOString().slice(0,10)
         var endDate = datetime.toISOString().slice(0,10)
@@ -44,6 +44,20 @@ export class monthlyBudgetTable extends Database{
         var query = 'SELECT * FROM expenses WHERE transactionDate BETWEEN \'' + startDate + ' 00:00:00\''+ ' AND \'' + endDate + ' 23:59:59\';'
 
         return this._query(query)
+    }
+
+    queryBudgetReport(){
+
+        var datetime = new Date();
+        var startDate = new Date(datetime.getFullYear(), datetime.getMonth(), 1).toISOString().slice(0,10)
+        var endDate = datetime.toISOString().slice(0,10)
+
+        
+        
+        var query = 'SELECT * FROM monthlybudgetReports WHERE reportDate BETWEEN \'' + startDate + ' 00:00:00\''+ ' AND \'' + endDate + ' 23:59:59\';'
+
+        return this._query(query)
+
     }
 
 }
@@ -74,8 +88,12 @@ export class financeServer extends Server{
     }
 
     getMonthlyTransactions(){
-        return this.database.getMonthlyTransactions()
+        return this.database.queryMonthlyTransactions()
         
+    }
+
+    getBudgetReport(){
+        return this.database.queryBudgetReport()
     }
 
 }

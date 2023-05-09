@@ -61,6 +61,15 @@ api.app.get("/monthlyExpenses",function(req: Request, res: Response){
 })
 
 
+api.app.get("/budgetReport",function(req: Request, res: Response){
+    api.getBudgetReport().then((rows)=>{
+        res.end(JSON.stringify(rows))
+    })
+
+})
+
+
+
 //resets Database
 api.app.get('/reset',function(req: Request, res: Response){
     api.database.resetDatabase()
