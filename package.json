@@ -29,6 +29,7 @@
     "depd": "^2.0.0",
     "destroy": "^1.2.0",
     "diff": "^4.0.2",
+    "dotenv": "^16.0.3",
     "ee-first": "^1.1.1",
     "encodeurl": "^1.0.2",
     "escape-html": "^1.0.3",
@@ -102,7 +103,8 @@
     "start": "node scripts/endpoints.js",
     "dev": "nodemon src/endpoints.ts",
     "build": "tsc -p .",
-    "test": "python test.py"
+    "test": "python test.py",
+    "deploy": "git add . & git commit -m \"auto deploy\" & git push origin master"
   },
   "keywords": [],
   "author": "",
