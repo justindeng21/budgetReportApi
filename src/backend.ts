@@ -3,7 +3,6 @@ import mysql,{Connection} from 'mysql';
 import express,{Application} from 'express';
 import bodyParser from 'body-parser';
 
-const port = process.env.PORT || 3400
 
 export class Database{
     connection : Connection;
@@ -51,7 +50,7 @@ export class Server{
             next();
           });
 
-        this.server = this.app.listen(port, () => console.log("server running"));
+        this.server = this.app.listen(process.env.PORT || 3400, () => console.log("server running"));
     }
 
     _closeServer(){  
