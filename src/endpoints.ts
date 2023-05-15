@@ -1,6 +1,7 @@
-import {financeServer} from './server'
+import {financeServer, passwordManager} from './server'
 import {Request, Response} from 'express';
 import { urlencodedParser,jsonParser } from './backend';
+
 
 
 let api : financeServer;
@@ -11,7 +12,7 @@ api = new financeServer()
 
 api.app.post("/createReport", jsonParser, function(req: Request, res: Response){
     let userID,income,currentBalence : number
-    userID = 0;
+    userID = 1;
     income = parseFloat(req.body.income); 
     currentBalence = parseFloat(req.body.income);
 
@@ -22,7 +23,7 @@ api.app.post("/createReport", jsonParser, function(req: Request, res: Response){
     }
     else{
         api.newBudgetReport(`${userID},${income},${currentBalence},`)
-        res.send('ok response') 
+        res.sendStatus(204);
     }
     res.end()
 
@@ -47,9 +48,12 @@ api.app.post("/createTransaction",jsonParser,function(req: Request, res: Respons
         res.sendStatus(204);
     }
     res.end()
-
-
 })
+
+
+
+
+
 
 
 
@@ -70,14 +74,13 @@ api.app.get("/budgetReport",function(req: Request, res: Response){
 
 
 
-//resets Database
+
 api.app.get('/reset',function(req: Request, res: Response){
     api.database.resetDatabase()
     res.send('Database reset subroutine called')
 })
 
 
-//handles bad requests
 api.app.get("(/*)",function(req: Request, res: Response){
 
     const response = {
@@ -89,6 +92,53 @@ api.app.get("(/*)",function(req: Request, res: Response){
     res.setHeader('Content-Type', 'application/json');
     res.end(jsonContent)
 })
+
+
+api.app.post("/createUser",jsonParser,function(req: Request, res: Response){
+
+    let token = req.body.token
+    let username = req.body.username;
+    let password = req.body.password;
+    if(token != 'c0b4344b64f7462ad999db7e1f483a9e'){
+        res.sendStatus(400)
+    }
+
+    else{
+        api.database.createUser(username,password);
+        res.sendStatus(204);
+    }
+
+})
+
+
+api.app.post("/auth",jsonParser,function(req: Request, res: Response){
+
+    let username = req.body.username;
+    let password = req.body.password;
+
+
+
+
+
+    api.database.authenticateUser(username,password).then((rows : any )=>{
+        var result = rows
+        let saltedPassword = password + result[0]['salt']
+
+        if(passwordManager.getHash(saltedPassword) == result[0]['password']){
+            res.sendStatus(204);
+
+        }
+        else{
+            res.sendStatus(400);
+        }
+    })
+    
+
+})
+
+
+
+
 
 
 

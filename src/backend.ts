@@ -9,11 +9,11 @@ export class Database{
     constructor(){
 
         this.connection = mysql.createConnection({
-            host: process.env.HOST,
+            host: process.env.HOST || '127.0.0.1',
             port: 3306,
-            user: process.env.USER,
-            password: process.env.PASSWORD,
-            database: process.env.DATABASE
+            user: process.env.USER || 'root',
+            password: process.env.PASSWORD || 'Kenyalove817678!',
+            database: process.env.DATABASE || 'test'
         });
         
         this.connection.connect(function(err) {
