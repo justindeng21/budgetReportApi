@@ -125,14 +125,7 @@ api.app.post("/auth",jsonParser,function(req: Request, res: Response){
         let saltedPassword = password + result[0]['salt']
 
         if(passwordManager.getHash(saltedPassword) == result[0]['password']){
-            let options = {
-                maxAge: 1000 * 60 * 15, // would expire after 15 minutes
-                httpOnly: true, // The cookie only accessible by the web server
-                signed: true // Indicates if the cookie should be signed
-            }
-        
-            // Set cookie
-            res.cookie('auth', '{token:21324235nkrdsfs9}', options) // options is optional
+
             res.sendStatus(200)
 
         }
