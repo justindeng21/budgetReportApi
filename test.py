@@ -8,7 +8,9 @@ header = {
     'Content-Type':'application/json'
 }
 
-url = 'http://127.0.0.1:3400/createTransaction'
+domain = 'https://budgetreportapi.herokuapp.com'
+
+url = domain + '/createTransaction'
 
 response = requests.post(url,headers=header,json={
     'expense' : '759.99',
@@ -17,7 +19,7 @@ response = requests.post(url,headers=header,json={
 print(response.status_code)
 
 
-url = 'http://127.0.0.1:3400/createReport'
+url = domain + '/createReport'
 
 response = requests.post(url,headers=header,json={
     'income' : '1443.46'
@@ -28,7 +30,7 @@ header = {
     'Content-Type':'application/json'
 }
 
-url = 'http://127.0.0.1:3400/createUser'
+url = domain + '/createUser'
 
 response = requests.post(url,headers=header,json={
     'username' : 'raiinykush',
@@ -40,7 +42,7 @@ print(response.status_code)
 
 
 
-url = 'http://127.0.0.1:3400/auth'
+url = domain + '/auth'
 
 response = requests.post(url,headers=header,json={
     'username' : 'raiinykush',
