@@ -125,17 +125,12 @@ api.app.post("/auth",jsonParser,function(req: Request, res: Response){
         let saltedPassword = password + result[0]['salt']
 
         if(passwordManager.getHash(saltedPassword) == result[0]['password']){
-
-            res.sendStatus(200)
+            res.sendStatus(204);
 
         }
         else{
             res.sendStatus(400);
         }
-
-
-
-
     })
     
 
