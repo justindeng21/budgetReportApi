@@ -7,8 +7,13 @@ import { urlencodedParser,jsonParser } from './backend';
 let api : financeServer;
 api = new financeServer()
 
+let masterkey = passwordManager.getHash(passwordManager.getRandomString(10))
 
+interface userKeyDict  {
+    [key : string] : string
+}
 
+const userKeys : userKeyDict = {};
 
 api.app.post("/createReport", jsonParser, function(req: Request, res: Response){
     let userID,income,currentBalence : number
@@ -111,6 +116,8 @@ api.app.post("/createUser",jsonParser,function(req: Request, res: Response){
 })
 
 
+
+
 api.app.post("/auth",jsonParser,function(req: Request, res: Response){
 
     let username = req.body.username;
@@ -125,16 +132,25 @@ api.app.post("/auth",jsonParser,function(req: Request, res: Response){
         let saltedPassword = password + result[0]['salt']
 
         if(passwordManager.getHash(saltedPassword) == result[0]['password']){
+            let userAuthtoken = passwordManager.getHash(passwordManager.getRandomString(10));
+            let userSecretString = passwordManager.getHash(masterkey + userAuthtoken);
+            userKeys[userAuthtoken] = userSecretString;
+            res.cookie('budgetReportAuth', userAuthtoken);
             res.sendStatus(204);
-
         }
         else{
             res.sendStatus(400);
         }
     })
+
+    res.end()
     
 
 })
+
+
+
+
 
 
 
