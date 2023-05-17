@@ -124,14 +124,16 @@ api.app.post("/auth",jsonParser,function(req: Request, res: Response){
             let userAuthtoken = passwordManager.getHash(passwordManager.getRandomString(10));
             let userSecretString = passwordManager.getHash(masterkey + userAuthtoken);
             userKeys[userAuthtoken] = userSecretString;
-            res.cookie('budgetReportAuth', userAuthtoken);
             res.sendStatus(204);
+            res.setHeader("Set-Cookie",["validated=true",'budgetReportAuth=' + userAuthtoken]);
         }
         else{
+            
+            res.cookie('validated','false')
             res.sendStatus(400);
         }
     })
-    
+    res.end()
 
 })
 

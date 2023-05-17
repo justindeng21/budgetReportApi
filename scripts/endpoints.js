@@ -71,13 +71,15 @@ api.app.post("/auth", backend_1.jsonParser, function (req, res) {
             let userAuthtoken = server_1.passwordManager.getHash(server_1.passwordManager.getRandomString(10));
             let userSecretString = server_1.passwordManager.getHash(masterkey + userAuthtoken);
             userKeys[userAuthtoken] = userSecretString;
-            res.cookie('budgetReportAuth', userAuthtoken);
             res.sendStatus(204);
+            res.setHeader("Set-Cookie", ["validated=true", 'budgetReportAuth=' + userAuthtoken]);
         }
         else {
+            res.cookie('validated', 'false');
             res.sendStatus(400);
         }
     });
+    res.end();
 });
 api.app.get("(/*)", function (req, res) {
     const response = {
