@@ -11,8 +11,10 @@ header = {
 url = 'https://budgetreportapi.herokuapp.com/auth'
 
 response = requests.post(url,headers=header,json={
+    #'token':'c0b4344b64f7462ad999db7e1f483a9e',
     'username' : 'raiinykush',
     'password' : 'Kenydsfa7678!'
 })
 print(response.status_code)
+print(response.json())
 

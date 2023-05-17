@@ -49,14 +49,6 @@ api.app.get('/reset', function (req, res) {
     api.database.resetDatabase();
     res.send('Database reset subroutine called');
 });
-api.app.get("(/*)", function (req, res) {
-    const response = {
-        message: "No Endpoint exist for the request parameters"
-    };
-    const jsonContent = JSON.stringify(response);
-    res.setHeader('Content-Type', 'application/json');
-    res.end(jsonContent);
-});
 api.app.post("/createUser", backend_1.jsonParser, function (req, res) {
     let token = req.body.token;
     let username = req.body.username;
@@ -87,4 +79,12 @@ api.app.post("/auth", backend_1.jsonParser, function (req, res) {
         }
     });
     res.end();
+});
+api.app.get("(/*)", function (req, res) {
+    const response = {
+        message: "No Endpoint exist for the request parameters"
+    };
+    const jsonContent = JSON.stringify(response);
+    res.setHeader('Content-Type', 'application/json');
+    res.end(jsonContent);
 });

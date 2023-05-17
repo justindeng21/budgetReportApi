@@ -86,17 +86,6 @@ api.app.get('/reset',function(req: Request, res: Response){
 })
 
 
-api.app.get("(/*)",function(req: Request, res: Response){
-
-    const response = {
-        message: "No Endpoint exist for the request parameters"
-    }
-
-    const jsonContent = JSON.stringify(response);
-
-    res.setHeader('Content-Type', 'application/json');
-    res.end(jsonContent)
-})
 
 
 api.app.post("/createUser",jsonParser,function(req: Request, res: Response){
@@ -150,6 +139,17 @@ api.app.post("/auth",jsonParser,function(req: Request, res: Response){
 
 
 
+api.app.get("(/*)",function(req: Request, res: Response){
+
+    const response = {
+        message: "No Endpoint exist for the request parameters"
+    }
+
+    const jsonContent = JSON.stringify(response);
+
+    res.setHeader('Content-Type', 'application/json');
+    res.end(jsonContent)
+})
 
 
 
