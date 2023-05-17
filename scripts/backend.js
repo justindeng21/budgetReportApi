@@ -7,15 +7,14 @@ exports.urlencodedParser = exports.jsonParser = exports.Server = exports.Databas
 const mysql_1 = __importDefault(require("mysql"));
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
-const port = process.env.PORT || 3400;
 class Database {
     constructor() {
         this.connection = mysql_1.default.createConnection({
-            host: "127.0.0.1",
+            host: process.env.HOST || '127.0.0.1',
             port: 3306,
-            user: "root",
-            password: 'Kenyalove817678!',
-            database: 'test'
+            user: process.env.USER || 'root',
+            password: process.env.PASSWORD || 'Kenyalove817678!',
+            database: process.env.DATABASE || 'test'
         });
         this.connection.connect(function (err) {
             if (err)
@@ -40,7 +39,7 @@ class Server {
             res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
             next();
         });
-        this.server = this.app.listen(port, () => console.log("server running"));
+        this.server = this.app.listen(process.env.PORT || 3400, () => console.log("server running"));
     }
     _closeServer() {
         this.server.close();
