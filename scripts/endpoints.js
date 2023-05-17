@@ -78,7 +78,6 @@ api.app.post("/auth", backend_1.jsonParser, function (req, res) {
             res.sendStatus(400);
         }
     });
-    res.end();
 });
 api.app.get("(/*)", function (req, res) {
     const response = {
