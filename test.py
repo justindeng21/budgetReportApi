@@ -16,5 +16,5 @@ response = requests.post(url,headers=header,json={
     'password' : 'Kenydsfa7678!'
 })
 print(response.status_code)
-print(response.json())
+print(response.json)
 

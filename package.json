@@ -100,9 +100,8 @@
     "yn": "^3.1.1"
   },
   "scripts": {
-    "start": "npm run build & npm install & node scripts/endpoints.js",
+    "start": "node scripts/endpoints.js",
     "dev": "nodemon src/endpoints.ts",
-    "build": "tsc -p .",
     "test": "python test.py",
     "deploy": "npm run build & git add . & git commit -m \"auto deploy\" & git push origin master"
   },

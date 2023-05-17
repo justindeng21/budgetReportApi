@@ -131,8 +131,6 @@ api.app.post("/auth",jsonParser,function(req: Request, res: Response){
             res.sendStatus(400);
         }
     })
-
-    res.end()
     
 
 })
