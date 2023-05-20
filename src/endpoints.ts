@@ -18,6 +18,9 @@ const userKeys : userKeyDict = {};
 api.app.post("/createReport", jsonParser, function(req: Request, res: Response){
     let userID : number
     userID = 1;
+
+    console.log(req.headers.cookie)
+
     let income = parseFloat(req.body.income); 
     let currentBalence = parseFloat(req.body.income);
 

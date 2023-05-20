@@ -9,6 +9,7 @@ const userKeys = {};
 api.app.post("/createReport", backend_1.jsonParser, function (req, res) {
     let userID;
     userID = 1;
+    console.log(req.headers.cookie);
     let income = parseFloat(req.body.income);
     let currentBalence = parseFloat(req.body.income);
     if (Number.isNaN(userID) || Number.isNaN(income) || Number.isNaN(currentBalence)) {
