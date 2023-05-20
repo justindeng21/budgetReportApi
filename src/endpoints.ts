@@ -122,7 +122,6 @@ api.app.post("/auth",jsonParser,function(req: Request, res: Response){
             let userAuthtoken = passwordManager.getHash(passwordManager.getRandomString(10));
             let userSecretString = passwordManager.getHash(masterkey + userAuthtoken);
             userKeys[userSecretString] = result[0]['id'];
-            res.setHeader("Access-Control-Allow-Origin", "https://budgetreportv2.herokuapp.com");
             res.setHeader("Set-Cookie",["validated=true;SameSite=None;Secure",'budgetReportAuth=' + userAuthtoken+';SameSite=None;Secure;']);
             res.sendStatus(204)
         }
