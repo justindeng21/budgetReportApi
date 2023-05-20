@@ -10,16 +10,24 @@ api = new financeServer()
 let masterkey = passwordManager.getHash(passwordManager.getRandomString(10))
 
 interface userKeyDict  {
-    [key : string] : string
+    [key : string] : number
 }
 
 const userKeys : userKeyDict = {};
 
+
+
+function validateToken(authtoken : string){
+    let userKey = passwordManager.getHash(masterkey + authtoken);
+    return userKeys[userKey]
+}
+
+
 api.app.post("/createReport", jsonParser, function(req: Request, res: Response){
     let userID = 0
 
-    let validationToken = req.headers.cookie?.split('=')
-    console.log(validationToken)
+    let authToken = req.headers.cookie?.split('=')
+    console.log(authToken)
 
     let income = parseFloat(req.body.income); 
     let currentBalence = parseFloat(req.body.income);
