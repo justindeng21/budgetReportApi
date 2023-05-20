@@ -72,7 +72,7 @@ api.app.post("/auth", backend_1.jsonParser, function (req, res) {
             let userSecretString = server_1.passwordManager.getHash(masterkey + userAuthtoken);
             userKeys[userAuthtoken] = userSecretString;
             res.setHeader("Set-Cookie", ["validated=true;SameSite=None;Secure", 'budgetReportAuth=' + userAuthtoken + ';SameSite=None;Secure;']);
-            res.redirect(307, '/reportingtool');
+            res.redirect(307, 'https://budgetreportv2.herokuapp.com/reportingtool');
         }
         else {
             res.cookie('validated', 'false');
