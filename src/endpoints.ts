@@ -10,7 +10,7 @@ api = new financeServer()
 let masterkey = passwordManager.getHash(passwordManager.getRandomString(10))
 
 interface userKeyDict  {
-    [key : string] : number
+    [key : string] : string
 }
 
 const userKeys : userKeyDict = {};
@@ -19,25 +19,23 @@ const userKeys : userKeyDict = {};
 
 function validateToken(authtoken : string){
     let userKey = passwordManager.getHash(masterkey + authtoken);
-    console.log(userKeys[userKey])
     return userKeys[userKey]
 }
 
 
 api.app.post("/createReport", jsonParser, function(req: Request, res: Response){
-    let userID = 0
     let authToken = req.headers.cookie?.split('=')
     let income = parseFloat(req.body.income); 
     let currentBalence = parseFloat(req.body.income);
 
 
-    if( Number.isNaN(userID) || Number.isNaN(income) || Number.isNaN(currentBalence)){
+    if( Number.isNaN(income) || Number.isNaN(currentBalence)){
         res.send('Bad Request')
 
     }
     else if(authToken !== undefined){
-        validateToken(authToken[1])
-        api.newBudgetReport(`${userID},${income},${currentBalence},`)
+        
+        api.newBudgetReport(`${validateToken(authToken[1])},${income},${currentBalence},`)
         res.sendStatus(204);
     }
     res.end()
