@@ -30,7 +30,7 @@ export class monthlyBudgetTable extends Database{
 
     createTables(){
         this._query('CREATE TABLE IF NOT EXISTS monthlyBudgetReports(userID int, id mediumint not null auto_increment, income DECIMAL(10,2), currentBalance DECIMAL(6,2), reportDate date,PRIMARY KEY (id));').then(()=>{
-            this._query('CREATE TABLE IF NOT EXISTS expenses(id mediumint not null auto_increment, expense DECIMAL(6,2), transactionDate date, transactionDescription varchar(50), PRIMARY KEY (id));').then(()=>{
+            this._query('CREATE TABLE IF NOT EXISTS expenses(id mediumint not null auto_increment, userID int,expense DECIMAL(6,2), transactionDate date, transactionDescription varchar(50), PRIMARY KEY (id));').then(()=>{
                 this._query('CREATE TABLE IF NOT EXISTS users(id mediumint not null auto_increment, salt varchar(12), password varchar(32), username varchar(25), PRIMARY KEY (id));')
             })
         })
