@@ -19,16 +19,14 @@ const userKeys : userKeyDict = {};
 
 function validateToken(authtoken : string){
     let userKey = passwordManager.getHash(masterkey + authtoken);
+    console.log(userKeys[userKey])
     return userKeys[userKey]
 }
 
 
 api.app.post("/createReport", jsonParser, function(req: Request, res: Response){
     let userID = 0
-
     let authToken = req.headers.cookie?.split('=')
-    console.log(authToken)
-
     let income = parseFloat(req.body.income); 
     let currentBalence = parseFloat(req.body.income);
 
@@ -37,7 +35,8 @@ api.app.post("/createReport", jsonParser, function(req: Request, res: Response){
         res.send('Bad Request')
 
     }
-    else{
+    else if(authToken !== undefined){
+        validateToken(authToken[1])
         api.newBudgetReport(`${userID},${income},${currentBalence},`)
         res.sendStatus(204);
     }

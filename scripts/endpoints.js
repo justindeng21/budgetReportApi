@@ -8,19 +8,20 @@ let masterkey = server_1.passwordManager.getHash(server_1.passwordManager.getRan
 const userKeys = {};
 function validateToken(authtoken) {
     let userKey = server_1.passwordManager.getHash(masterkey + authtoken);
+    console.log(userKeys[userKey]);
     return userKeys[userKey];
 }
 api.app.post("/createReport", backend_1.jsonParser, function (req, res) {
     var _a;
     let userID = 0;
     let authToken = (_a = req.headers.cookie) === null || _a === void 0 ? void 0 : _a.split('=');
-    console.log(authToken);
     let income = parseFloat(req.body.income);
     let currentBalence = parseFloat(req.body.income);
     if (Number.isNaN(userID) || Number.isNaN(income) || Number.isNaN(currentBalence)) {
         res.send('Bad Request');
     }
-    else {
+    else if (authToken !== undefined) {
+        validateToken(authToken[1]);
         api.newBudgetReport(`${userID},${income},${currentBalence},`);
         res.sendStatus(204);
     }
