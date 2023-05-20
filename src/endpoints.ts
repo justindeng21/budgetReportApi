@@ -122,7 +122,7 @@ api.app.post("/auth",jsonParser,function(req: Request, res: Response){
             userKeys[userAuthtoken] = userSecretString;
             
             res.setHeader("Set-Cookie",["validated=true;SameSite=None;Secure",'budgetReportAuth=' + userAuthtoken+';SameSite=None;Secure;']);
-            res.redirect(204, '/reportingtool');
+            res.redirect(307, '/reportingtool');
         }
         else{
             
