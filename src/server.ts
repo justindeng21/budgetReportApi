@@ -55,7 +55,7 @@ export class monthlyBudgetTable extends Database{
     }
 
     createTransaction(values : string){
-        var query = 'insert into expenses(expense, transactionDescription,transactionDate)VALUES (' + values + 'CURDATE());'
+        var query = 'insert into expenses(userID,expense, transactionDescription,transactionDate)VALUES (' + values + 'CURDATE());'
         return this._query(query)
     }
 

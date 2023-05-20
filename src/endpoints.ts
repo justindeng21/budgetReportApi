@@ -46,7 +46,7 @@ api.app.post("/createReport", jsonParser, function(req: Request, res: Response){
 
 
 api.app.post("/createTransaction",jsonParser,function(req: Request, res: Response){
-
+    let authToken = req.headers.cookie?.split('=')
     let transactionDescription = req.body.transactionDescription
     let expense = parseFloat(req.body.expense);
 
@@ -55,8 +55,8 @@ api.app.post("/createTransaction",jsonParser,function(req: Request, res: Respons
         res.send('Bad Request')
         console.log(expense)
     }
-    else{
-        api.newTransaction(`${expense},"${transactionDescription}",`);
+    else if(authToken !== undefined){
+        api.newTransaction(`${validateToken(authToken[1])},${expense},"${transactionDescription}",`);
         res.sendStatus(204);
     }
     res.end()

@@ -69,7 +69,7 @@ class monthlyBudgetTable extends backend_1.Database {
         return this._query(query);
     }
     createTransaction(values) {
-        var query = 'insert into expenses(expense, transactionDescription,transactionDate)VALUES (' + values + 'CURDATE());';
+        var query = 'insert into expenses(userID,expense, transactionDescription,transactionDate)VALUES (' + values + 'CURDATE());';
         return this._query(query);
     }
     createUser(username, password) {

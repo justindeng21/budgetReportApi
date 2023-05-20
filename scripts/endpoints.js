@@ -25,14 +25,16 @@ api.app.post("/createReport", backend_1.jsonParser, function (req, res) {
     res.end();
 });
 api.app.post("/createTransaction", backend_1.jsonParser, function (req, res) {
+    var _a;
+    let authToken = (_a = req.headers.cookie) === null || _a === void 0 ? void 0 : _a.split('=');
     let transactionDescription = req.body.transactionDescription;
     let expense = parseFloat(req.body.expense);
     if (Number.isNaN(expense)) {
         res.send('Bad Request');
         console.log(expense);
     }
-    else {
-        api.newTransaction(`${expense},"${transactionDescription}",`);
+    else if (authToken !== undefined) {
+        api.newTransaction(`${validateToken(authToken[1])},${expense},"${transactionDescription}",`);
         res.sendStatus(204);
     }
     res.end();
