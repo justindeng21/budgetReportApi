@@ -121,7 +121,7 @@ api.app.post("/auth",jsonParser,function(req: Request, res: Response){
             let userSecretString = passwordManager.getHash(masterkey + userAuthtoken);
             userKeys[userAuthtoken] = userSecretString;
             
-            res.setHeader("Set-Cookie",["validated=true;SameSite=None",'budgetReportAuth=' + userAuthtoken+';SameSite=None']);
+            res.setHeader("Set-Cookie",["validated=true;SameSite=None;Secure",'budgetReportAuth=' + userAuthtoken+';SameSite=None;Secure;']);
             res.sendStatus(204);
         }
         else{
