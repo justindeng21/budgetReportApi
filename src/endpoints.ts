@@ -16,10 +16,10 @@ interface userKeyDict  {
 const userKeys : userKeyDict = {};
 
 api.app.post("/createReport", jsonParser, function(req: Request, res: Response){
-    let userID : number
-    userID = 1;
+    let userID = 0
 
-    console.log(req.headers.cookie)
+    let validationToken = req.headers.cookie?.split('=')
+    console.log(validationToken)
 
     let income = parseFloat(req.body.income); 
     let currentBalence = parseFloat(req.body.income);
@@ -122,7 +122,7 @@ api.app.post("/auth",jsonParser,function(req: Request, res: Response){
             let userAuthtoken = passwordManager.getHash(passwordManager.getRandomString(10));
             let userSecretString = passwordManager.getHash(masterkey + userAuthtoken);
             userKeys[userSecretString] = result[0]['id'];
-            res.setHeader("Set-Cookie",["validated=true;SameSite=None;Secure",'budgetReportAuth=' + userAuthtoken+';SameSite=None;Secure;']);
+            res.setHeader("Set-Cookie",['budgetReportAuth=' + userAuthtoken+';SameSite=None;Secure;']);
             res.sendStatus(204)
         }
         else{

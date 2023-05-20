@@ -7,9 +7,10 @@ api = new server_1.financeServer();
 let masterkey = server_1.passwordManager.getHash(server_1.passwordManager.getRandomString(10));
 const userKeys = {};
 api.app.post("/createReport", backend_1.jsonParser, function (req, res) {
-    let userID;
-    userID = 1;
-    console.log(req.headers.cookie);
+    var _a;
+    let userID = 0;
+    let validationToken = (_a = req.headers.cookie) === null || _a === void 0 ? void 0 : _a.split('=');
+    console.log(validationToken);
     let income = parseFloat(req.body.income);
     let currentBalence = parseFloat(req.body.income);
     if (Number.isNaN(userID) || Number.isNaN(income) || Number.isNaN(currentBalence)) {
@@ -70,7 +71,7 @@ api.app.post("/auth", backend_1.jsonParser, function (req, res) {
             let userAuthtoken = server_1.passwordManager.getHash(server_1.passwordManager.getRandomString(10));
             let userSecretString = server_1.passwordManager.getHash(masterkey + userAuthtoken);
             userKeys[userSecretString] = result[0]['id'];
-            res.setHeader("Set-Cookie", ["validated=true;SameSite=None;Secure", 'budgetReportAuth=' + userAuthtoken + ';SameSite=None;Secure;']);
+            res.setHeader("Set-Cookie", ['budgetReportAuth=' + userAuthtoken + ';SameSite=None;Secure;']);
             res.sendStatus(204);
         }
         else {
