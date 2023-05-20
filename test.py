@@ -8,10 +8,10 @@ header = {
     'Content-Type':'application/json'
 }
 
-
+ 
 url = 'http://localhost:3400/auth'
 
-response = requests.get(url,headers=header,json={
+response = requests.post(url,headers=header,json={
     #'token':'c0b4344b64f7462ad999db7e1f483a9e',
     'username' : 'raiinykush',
     'password' : 'Kenyalove817678!'

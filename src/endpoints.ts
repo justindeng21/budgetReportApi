@@ -112,10 +112,6 @@ api.app.post("/auth",jsonParser,function(req: Request, res: Response){
     let username = req.body.username;
     let password = req.body.password;
 
-
-
-
-
     api.database.authenticateUser(username,password).then((rows : any )=>{
         var result = rows
         let saltedPassword = password + result[0]['salt']
@@ -124,8 +120,9 @@ api.app.post("/auth",jsonParser,function(req: Request, res: Response){
             let userAuthtoken = passwordManager.getHash(passwordManager.getRandomString(10));
             let userSecretString = passwordManager.getHash(masterkey + userAuthtoken);
             userKeys[userAuthtoken] = userSecretString;
-            res.sendStatus(204);
+            
             res.setHeader("Set-Cookie",["validated=true",'budgetReportAuth=' + userAuthtoken]);
+            res.sendStatus(204);
         }
         else{
             
@@ -133,7 +130,6 @@ api.app.post("/auth",jsonParser,function(req: Request, res: Response){
             res.sendStatus(400);
         }
     })
-    res.end()
 
 })
 
