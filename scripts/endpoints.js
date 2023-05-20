@@ -7,10 +7,10 @@ api = new server_1.financeServer();
 let masterkey = server_1.passwordManager.getHash(server_1.passwordManager.getRandomString(10));
 const userKeys = {};
 api.app.post("/createReport", backend_1.jsonParser, function (req, res) {
-    let userID, income, currentBalence;
+    let userID;
     userID = 1;
-    income = parseFloat(req.body.income);
-    currentBalence = parseFloat(req.body.income);
+    let income = parseFloat(req.body.income);
+    let currentBalence = parseFloat(req.body.income);
     if (Number.isNaN(userID) || Number.isNaN(income) || Number.isNaN(currentBalence)) {
         res.send('Bad Request');
     }
@@ -21,10 +21,8 @@ api.app.post("/createReport", backend_1.jsonParser, function (req, res) {
     res.end();
 });
 api.app.post("/createTransaction", backend_1.jsonParser, function (req, res) {
-    let expense;
-    let transactionDescription;
-    transactionDescription = req.body.transactionDescription;
-    expense = parseFloat(req.body.expense);
+    let transactionDescription = req.body.transactionDescription;
+    let expense = parseFloat(req.body.expense);
     if (Number.isNaN(expense)) {
         res.send('Bad Request');
         console.log(expense);
@@ -64,16 +62,16 @@ api.app.post("/createUser", backend_1.jsonParser, function (req, res) {
 api.app.post("/auth", backend_1.jsonParser, function (req, res) {
     let username = req.body.username;
     let password = req.body.password;
-    api.database.authenticateUser(username, password).then((rows) => {
+    api.database.authenticateUser(username).then((rows) => {
         var result = rows;
         let saltedPassword = password + result[0]['salt'];
         if (server_1.passwordManager.getHash(saltedPassword) == result[0]['password']) {
             let userAuthtoken = server_1.passwordManager.getHash(server_1.passwordManager.getRandomString(10));
             let userSecretString = server_1.passwordManager.getHash(masterkey + userAuthtoken);
-            userKeys[userAuthtoken] = userSecretString;
+            userKeys[userSecretString] = result[0]['id'];
             res.setHeader("Access-Control-Allow-Origin", "https://budgetreportv2.herokuapp.com");
             res.setHeader("Set-Cookie", ["validated=true;SameSite=None;Secure", 'budgetReportAuth=' + userAuthtoken + ';SameSite=None;Secure;']);
-            res.redirect(307, 'https://budgetreportv2.herokuapp.com/reportingtool');
+            res.sendStatus(204);
         }
         else {
             res.cookie('validated', 'false');

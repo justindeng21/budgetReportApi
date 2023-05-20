@@ -96,7 +96,7 @@ export class monthlyBudgetTable extends Database{
     }
 
 
-    authenticateUser(username : string, password : string){
+    authenticateUser(username : string){
         var query =  'SELECT * FROM users WHERE username = ' + `"${username}"` +';'
         return this._query(query)
     }

@@ -93,7 +93,7 @@ class monthlyBudgetTable extends backend_1.Database {
         var query = 'SELECT * FROM monthlybudgetReports WHERE reportDate BETWEEN \'' + startDate + ' 00:00:00\'' + ' AND \'' + endDate + ' 23:59:59\';';
         return this._query(query);
     }
-    authenticateUser(username, password) {
+    authenticateUser(username) {
         var query = 'SELECT * FROM users WHERE username = ' + `"${username}"` + ';';
         return this._query(query);
     }

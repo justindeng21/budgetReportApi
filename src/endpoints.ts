@@ -16,10 +16,10 @@ interface userKeyDict  {
 const userKeys : userKeyDict = {};
 
 api.app.post("/createReport", jsonParser, function(req: Request, res: Response){
-    let userID,income,currentBalence : number
+    let userID : number
     userID = 1;
-    income = parseFloat(req.body.income); 
-    currentBalence = parseFloat(req.body.income);
+    let income = parseFloat(req.body.income); 
+    let currentBalence = parseFloat(req.body.income);
 
 
     if( Number.isNaN(userID) || Number.isNaN(income) || Number.isNaN(currentBalence)){
@@ -38,10 +38,9 @@ api.app.post("/createReport", jsonParser, function(req: Request, res: Response){
 
 
 api.app.post("/createTransaction",jsonParser,function(req: Request, res: Response){
-    let expense : number
-    let transactionDescription : string
-    transactionDescription = req.body.transactionDescription
-    expense = parseFloat(req.body.expense);
+
+    let transactionDescription = req.body.transactionDescription
+    let expense = parseFloat(req.body.expense);
 
 
     if( Number.isNaN(expense)){
@@ -112,17 +111,17 @@ api.app.post("/auth",jsonParser,function(req: Request, res: Response){
     let username = req.body.username;
     let password = req.body.password;
 
-    api.database.authenticateUser(username,password).then((rows : any )=>{
+    api.database.authenticateUser(username).then((rows : any )=>{
         var result = rows
         let saltedPassword = password + result[0]['salt']
 
         if(passwordManager.getHash(saltedPassword) == result[0]['password']){
             let userAuthtoken = passwordManager.getHash(passwordManager.getRandomString(10));
             let userSecretString = passwordManager.getHash(masterkey + userAuthtoken);
-            userKeys[userAuthtoken] = userSecretString;
+            userKeys[userSecretString] = result[0]['id'];
             res.setHeader("Access-Control-Allow-Origin", "https://budgetreportv2.herokuapp.com");
             res.setHeader("Set-Cookie",["validated=true;SameSite=None;Secure",'budgetReportAuth=' + userAuthtoken+';SameSite=None;Secure;']);
-            res.redirect(307, 'https://budgetreportv2.herokuapp.com/reportingtool');
+            res.sendStatus(204)
         }
         else{
             
