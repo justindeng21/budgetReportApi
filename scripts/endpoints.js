@@ -47,6 +47,7 @@ api.app.post("/createTransaction", backend_1.jsonParser, function (req, res) {
 api.app.get("/validateToken", function (req, res) {
     var _a;
     let authToken = (_a = req.headers.cookie) === null || _a === void 0 ? void 0 : _a.split('=');
+    console.log(authToken);
     if (authToken === undefined) {
         res.send(400);
     }

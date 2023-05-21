@@ -72,6 +72,8 @@ api.app.post("/createTransaction",jsonParser,function(req: Request, res: Respons
 
 api.app.get("/validateToken",function(req: Request, res: Response){
     let authToken = req.headers.cookie?.split('=')
+
+    console.log(authToken)
     if(authToken === undefined){
         res.send(400)   
     }
