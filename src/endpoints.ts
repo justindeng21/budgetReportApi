@@ -70,6 +70,8 @@ api.app.post("/createTransaction",jsonParser,function(req: Request, res: Respons
 
 
 api.app.get("/monthlyExpenses",function(req: Request, res: Response){
+    let authToken = req.headers.cookie?.split('=')
+    console.log(authToken)
     api.getMonthlyTransactions().then((rows)=>{
         res.end(JSON.stringify(rows))
     })

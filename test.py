@@ -9,13 +9,13 @@ header = {
 }
 
  
-url = 'http://localhost:3400/auth'
+url = 'https://budgetreportapi.herokuapp.com/createUser'
 
 response = requests.post(url,headers=header,json={
-    #'token':'c0b4344b64f7462ad999db7e1f483a9e',
+    'token':'c0b4344b64f7462ad999db7e1f483a9e',
     'username' : 'raiinykush',
     'password' : 'Kenyalove817678!'
 })
-print(response.status_code)
+
 
 
