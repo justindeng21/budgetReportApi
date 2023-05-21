@@ -19,7 +19,13 @@ const userKeys : userKeyDict = {};
 
 function validateToken(authtoken : string){
     let userKey = passwordManager.getHash(masterkey + authtoken);
-    return userKeys[userKey]
+    try{
+        return userKeys[userKey]
+    }
+    catch{
+        return 'invalidToken'
+    }
+    
 }
 
 
@@ -64,7 +70,20 @@ api.app.post("/createTransaction",jsonParser,function(req: Request, res: Respons
 
 
 
+api.app.get("/validateToken",function(req: Request, res: Response){
+    let authToken = req.headers.cookie?.split('=')
+    if(authToken === undefined){
+        res.send(400)   
+    }
+    if(authToken !== undefined && validateToken(authToken[1]) != 'invalidToken'){
+        res.send(400)
+    }
+    else{
+        res.send(200)
+    }
 
+
+})
 
 
 
@@ -137,7 +156,6 @@ api.app.post("/auth",jsonParser,function(req: Request, res: Response){
             res.sendStatus(204)
         }
         else{
-            
             res.cookie('validated','false')
             res.sendStatus(400);
         }

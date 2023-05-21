@@ -8,7 +8,12 @@ let masterkey = server_1.passwordManager.getHash(server_1.passwordManager.getRan
 const userKeys = {};
 function validateToken(authtoken) {
     let userKey = server_1.passwordManager.getHash(masterkey + authtoken);
-    return userKeys[userKey];
+    try {
+        return userKeys[userKey];
+    }
+    catch (_a) {
+        return 'invalidToken';
+    }
 }
 api.app.post("/createReport", backend_1.jsonParser, function (req, res) {
     var _a;
@@ -38,6 +43,19 @@ api.app.post("/createTransaction", backend_1.jsonParser, function (req, res) {
         res.sendStatus(204);
     }
     res.end();
+});
+api.app.get("/validateToken", function (req, res) {
+    var _a;
+    let authToken = (_a = req.headers.cookie) === null || _a === void 0 ? void 0 : _a.split('=');
+    if (authToken === undefined) {
+        res.send(400);
+    }
+    if (authToken !== undefined && validateToken(authToken[1]) != 'invalidToken') {
+        res.send(400);
+    }
+    else {
+        res.send(200);
+    }
 });
 api.app.get("/monthlyExpenses", function (req, res) {
     var _a;
