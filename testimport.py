@@ -6,7 +6,7 @@ import unittest
 
 
 
-url = 'http://localhost:3400'
+url = 'https://budgetreportapi.herokuapp.com'
 os.environ['NO_PROXY'] = '127.0.0.1'
 
 header = {
