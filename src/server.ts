@@ -76,7 +76,7 @@ export class monthlyBudgetTable extends Database{
 
         
         
-        var query = `SELECT * FROM expenses WHERE transactionDate BETWEEN \'' + ${startDate} + ' 00:00:00\''+ ' AND \'' + ${endDate} + ' 23:59:59\' where userID = ${userID} ;`
+        var query = `SELECT * FROM expenses WHERE transactionDate BETWEEN \'' + ${startDate} + ' 00:00:00\''+ ' AND \'' + ${endDate} + ' 23:59:59\' AND WHERE userID = ${userID} ;`
 
         return this._query(query)
     }
