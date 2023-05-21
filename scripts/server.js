@@ -83,18 +83,18 @@ class monthlyBudgetTable extends backend_1.Database {
         var datetime = new Date();
         var startDate = new Date(datetime.getFullYear(), datetime.getMonth(), 1).toISOString().slice(0, 10);
         var endDate = datetime.toISOString().slice(0, 10);
-        var query = `SELECT * FROM expenses WHERE transactionDate BETWEEN \'' + ${startDate} + ' 00:00:00\''+ ' AND \'' + ${endDate} + ' 23:59:59\' AND WHERE userID = ${userID} ;`;
+        var query = `SELECT * FROM expenses WHERE transactionDate BETWEEN '${startDate} 00:00:00' AND '${endDate} 23:59:59' AND userID = ${userID} ;`;
         return this._query(query);
     }
-    queryBudgetReport() {
+    queryBudgetReport(userID) {
         var datetime = new Date();
         var startDate = new Date(datetime.getFullYear(), datetime.getMonth(), 1).toISOString().slice(0, 10);
         var endDate = datetime.toISOString().slice(0, 10);
-        var query = 'SELECT * FROM monthlybudgetReports WHERE reportDate BETWEEN \'' + startDate + ' 00:00:00\'' + ' AND \'' + endDate + ' 23:59:59\';';
+        var query = `SELECT * FROM monthlybudgetReports WHERE reportDate BETWEEN '${startDate} 00:00:00' AND '${endDate} 23:59:59' AND userID = ${userID};`;
         return this._query(query);
     }
     authenticateUser(username) {
-        var query = 'SELECT * FROM users WHERE username = ' + `"${username}"` + ';';
+        var query = `SELECT * FROM users WHERE username = '${username}' ;`;
         return this._query(query);
     }
 }
@@ -114,8 +114,8 @@ class financeServer extends backend_1.Server {
     getMonthlyTransactions(userID) {
         return this.database.queryMonthlyTransactions(userID);
     }
-    getBudgetReport() {
-        return this.database.queryBudgetReport();
+    getBudgetReport(userID) {
+        return this.database.queryBudgetReport(userID);
     }
 }
 exports.financeServer = financeServer;

@@ -81,9 +81,12 @@ api.app.get("/monthlyExpenses",function(req: Request, res: Response){
 
 
 api.app.get("/budgetReport",function(req: Request, res: Response){
-    api.getBudgetReport().then((rows)=>{
-        res.end(JSON.stringify(rows))
-    })
+    let authToken = req.headers.cookie?.split('=')
+    if(authToken !== undefined){
+        api.getBudgetReport(validateToken(authToken[1])).then((rows)=>{
+            res.end(JSON.stringify(rows))
+        })
+    }
 
 })
 

@@ -76,12 +76,12 @@ export class monthlyBudgetTable extends Database{
 
         
         
-        var query = `SELECT * FROM expenses WHERE transactionDate BETWEEN \'' + ${startDate} + ' 00:00:00\''+ ' AND \'' + ${endDate} + ' 23:59:59\' AND WHERE userID = ${userID} ;`
+        var query = `SELECT * FROM expenses WHERE transactionDate BETWEEN '${startDate} 00:00:00' AND '${endDate} 23:59:59' AND userID = ${userID} ;`
 
         return this._query(query)
     }
 
-    queryBudgetReport(){
+    queryBudgetReport(userID : string){
 
         var datetime = new Date();
         var startDate = new Date(datetime.getFullYear(), datetime.getMonth(), 1).toISOString().slice(0,10)
@@ -89,7 +89,7 @@ export class monthlyBudgetTable extends Database{
 
         
         
-        var query = 'SELECT * FROM monthlybudgetReports WHERE reportDate BETWEEN \'' + startDate + ' 00:00:00\''+ ' AND \'' + endDate + ' 23:59:59\';'
+        var query = `SELECT * FROM monthlybudgetReports WHERE reportDate BETWEEN '${startDate} 00:00:00' AND '${endDate} 23:59:59' AND userID = ${userID};`
 
         return this._query(query)
 
@@ -97,7 +97,7 @@ export class monthlyBudgetTable extends Database{
 
 
     authenticateUser(username : string){
-        var query =  'SELECT * FROM users WHERE username = ' + `"${username}"` +';'
+        var query =  `SELECT * FROM users WHERE username = '${username}' ;`
         return this._query(query)
     }
 
@@ -133,8 +133,8 @@ export class financeServer extends Server{
         
     }
 
-    getBudgetReport(){
-        return this.database.queryBudgetReport()
+    getBudgetReport(userID : string){
+        return this.database.queryBudgetReport(userID)
     }
 
 }
