@@ -17,5 +17,12 @@ response = requests.post(url,headers=header,json={
     'password' : 'Kenyalove817678!'
 })
 
+response = requests.post(url,headers=header,json={
+    'token':'c0b4344b64f7462ad999db7e1f483a9e',
+    'username' : 'kenya',
+    'password' : 'password123'
+})
+
+
 
 
