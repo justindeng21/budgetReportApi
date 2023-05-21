@@ -9,17 +9,18 @@ header = {
 }
 
  
-url = 'https://budgetreportapi.herokuapp.com/createUser'
 
-response = requests.post(url,headers=header,json={
-    'token':'c0b4344b64f7462ad999db7e1f483a9e',
-    'username' : 'raiinykush',
-    'password' : 'Kenyalove817678!'
-})
+#url = 'https://budgetreportapi.herokuapp.com'
 
-response = requests.post(url,headers=header,json={
+
+url = 'http://localhost:3400'
+
+response = requests.get(url+'/reset',headers=header)
+
+
+response = requests.post(url+'/createUser',headers=header,json={
     'token':'c0b4344b64f7462ad999db7e1f483a9e',
-    'username' : 'kenya',
+    'username' : 'justin',
     'password' : 'password123'
 })
 

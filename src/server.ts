@@ -30,7 +30,7 @@ export class monthlyBudgetTable extends Database{
 
     createTables(){
         this._query('CREATE TABLE IF NOT EXISTS monthlyBudgetReports(userID int, id mediumint not null auto_increment, income DECIMAL(10,2), currentBalance DECIMAL(6,2), reportDate date,PRIMARY KEY (id));').then(()=>{
-            this._query('CREATE TABLE IF NOT EXISTS expenses(id mediumint not null auto_increment, userID int,expense DECIMAL(6,2), transactionDate date, transactionDescription varchar(50), PRIMARY KEY (id));').then(()=>{
+            this._query('CREATE TABLE IF NOT EXISTS expenses(id mediumint not null auto_increment, userID int,expense DECIMAL(6,2), transactionDate date, transactionDescription varchar(300), PRIMARY KEY (id));').then(()=>{
                 this._query('CREATE TABLE IF NOT EXISTS users(id mediumint not null auto_increment, salt varchar(12), password varchar(32), username varchar(25), PRIMARY KEY (id));')
             })
         })
@@ -56,8 +56,18 @@ export class monthlyBudgetTable extends Database{
 
     createTransaction(values : string){
         var query = 'insert into expenses(userID,expense, transactionDescription,transactionDate)VALUES (' + values + 'CURDATE());'
+        console.log(query)
         return this._query(query)
     }
+
+    importTransactions(values : string){
+        var query = `insert into expenses(userID, transactionDate, expense, transactionDescription)VALUES  ${values} ;`
+        return this._query(query)
+    }
+
+
+
+
 
     createUser(username : string, password : string){
 
@@ -105,7 +115,7 @@ export class financeServer extends Server{
     database : monthlyBudgetTable;
 
     constructor(){
-        super(); //calls parent class constructor
+        super();
         this.database = new monthlyBudgetTable();
         this.database.createTables()
     }
@@ -117,6 +127,10 @@ export class financeServer extends Server{
 
     newTransaction(value : string){
         this.database.createTransaction(value)
+    }
+
+    import(value : string){
+        this.database.importTransactions(value)
     }
 
     getMonthlyTransactions(userID : string){

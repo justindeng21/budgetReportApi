@@ -92,6 +92,20 @@ api.app.post("/createUser", backend_1.jsonParser, function (req, res) {
         res.sendStatus(204);
     }
 });
+api.app.post("/importExpenses", backend_1.jsonParser, function (req, res) {
+    let data = JSON.parse(req.body.data);
+    let values = '';
+    for (var i = 0; i < data.length; i++) {
+        var date = data[i]['date'].split('-');
+        var parsedDate = new Date(date[2], date[0] - 1, date[1]);
+        values += `(4,'${parsedDate.toISOString().slice(0, 10)} 00:00:00','${data[i]['value']}','${data[i]['description'].replace('\'', '_')}')`;
+        if (i != data.length - 1) {
+            values += ',';
+        }
+    }
+    api.server.import(values);
+    res.sendStatus(204);
+});
 api.app.post("/auth", backend_1.jsonParser, function (req, res) {
     let username = req.body.username;
     let password = req.body.password;

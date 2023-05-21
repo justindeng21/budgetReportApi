@@ -49,7 +49,7 @@ exports.passwordManager = passwordManager;
 class monthlyBudgetTable extends backend_1.Database {
     createTables() {
         this._query('CREATE TABLE IF NOT EXISTS monthlyBudgetReports(userID int, id mediumint not null auto_increment, income DECIMAL(10,2), currentBalance DECIMAL(6,2), reportDate date,PRIMARY KEY (id));').then(() => {
-            this._query('CREATE TABLE IF NOT EXISTS expenses(id mediumint not null auto_increment, userID int,expense DECIMAL(6,2), transactionDate date, transactionDescription varchar(50), PRIMARY KEY (id));').then(() => {
+            this._query('CREATE TABLE IF NOT EXISTS expenses(id mediumint not null auto_increment, userID int,expense DECIMAL(6,2), transactionDate date, transactionDescription varchar(300), PRIMARY KEY (id));').then(() => {
                 this._query('CREATE TABLE IF NOT EXISTS users(id mediumint not null auto_increment, salt varchar(12), password varchar(32), username varchar(25), PRIMARY KEY (id));');
             });
         });
@@ -70,6 +70,11 @@ class monthlyBudgetTable extends backend_1.Database {
     }
     createTransaction(values) {
         var query = 'insert into expenses(userID,expense, transactionDescription,transactionDate)VALUES (' + values + 'CURDATE());';
+        console.log(query);
+        return this._query(query);
+    }
+    importTransactions(values) {
+        var query = `insert into expenses(userID, transactionDate, expense, transactionDescription)VALUES  ${values} ;`;
         return this._query(query);
     }
     createUser(username, password) {
@@ -101,7 +106,7 @@ class monthlyBudgetTable extends backend_1.Database {
 exports.monthlyBudgetTable = monthlyBudgetTable;
 class financeServer extends backend_1.Server {
     constructor() {
-        super(); //calls parent class constructor
+        super();
         this.database = new monthlyBudgetTable();
         this.database.createTables();
     }
@@ -110,6 +115,9 @@ class financeServer extends backend_1.Server {
     }
     newTransaction(value) {
         this.database.createTransaction(value);
+    }
+    import(value) {
+        this.database.importTransactions(value);
     }
     getMonthlyTransactions(userID) {
         return this.database.queryMonthlyTransactions(userID);
