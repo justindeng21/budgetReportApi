@@ -103,7 +103,7 @@ api.app.post("/importExpenses", backend_1.jsonParser, function (req, res) {
             values += ',';
         }
     }
-    api.server.import(values);
+    api.import(values);
     res.sendStatus(204);
 });
 api.app.post("/auth", backend_1.jsonParser, function (req, res) {

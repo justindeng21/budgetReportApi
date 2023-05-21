@@ -150,7 +150,7 @@ api.app.post("/importExpenses",jsonParser,function(req: Request, res: Response){
         }
     }
 
-    api.server.import(values)
+    api.import(values)
     
 
 
