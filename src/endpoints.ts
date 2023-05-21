@@ -77,7 +77,7 @@ api.app.get("/validateToken",function(req: Request, res: Response){
     if(authToken === undefined){
         res.send(400)   
     }
-    if(authToken !== undefined && validateToken(authToken[1]) != 'invalidToken'){
+    if(authToken !== undefined && validateToken(authToken[1]) === 'invalidToken'){
         res.send(400)
     }
     else{
