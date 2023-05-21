@@ -42,10 +42,11 @@ api.app.post("/createTransaction", backend_1.jsonParser, function (req, res) {
 api.app.get("/monthlyExpenses", function (req, res) {
     var _a;
     let authToken = (_a = req.headers.cookie) === null || _a === void 0 ? void 0 : _a.split('=');
-    console.log(authToken);
-    api.getMonthlyTransactions().then((rows) => {
-        res.end(JSON.stringify(rows));
-    });
+    if (authToken !== undefined) {
+        api.getMonthlyTransactions(validateToken(authToken[1])).then((rows) => {
+            res.end(JSON.stringify(rows));
+        });
+    }
 });
 api.app.get("/budgetReport", function (req, res) {
     api.getBudgetReport().then((rows) => {

@@ -79,11 +79,11 @@ class monthlyBudgetTable extends backend_1.Database {
         var query = 'insert into users(salt, password, username)VALUES (' + values + ');';
         return this._query(query);
     }
-    queryMonthlyTransactions() {
+    queryMonthlyTransactions(userID) {
         var datetime = new Date();
         var startDate = new Date(datetime.getFullYear(), datetime.getMonth(), 1).toISOString().slice(0, 10);
         var endDate = datetime.toISOString().slice(0, 10);
-        var query = 'SELECT * FROM expenses WHERE transactionDate BETWEEN \'' + startDate + ' 00:00:00\'' + ' AND \'' + endDate + ' 23:59:59\';';
+        var query = `SELECT * FROM expenses WHERE transactionDate BETWEEN \'' + ${startDate} + ' 00:00:00\''+ ' AND \'' + ${endDate} + ' 23:59:59\' where userID = ${userID} ;`;
         return this._query(query);
     }
     queryBudgetReport() {
@@ -111,8 +111,8 @@ class financeServer extends backend_1.Server {
     newTransaction(value) {
         this.database.createTransaction(value);
     }
-    getMonthlyTransactions() {
-        return this.database.queryMonthlyTransactions();
+    getMonthlyTransactions(userID) {
+        return this.database.queryMonthlyTransactions(userID);
     }
     getBudgetReport() {
         return this.database.queryBudgetReport();
