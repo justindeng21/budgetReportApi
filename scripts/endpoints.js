@@ -95,6 +95,7 @@ api.app.post("/createUser", backend_1.jsonParser, function (req, res) {
 api.app.post("/importExpenses", backend_1.jsonParser, function (req, res) {
     let data = JSON.parse(req.body.data);
     let values = '';
+    console.log(data);
     //for(var i = 0; i < data.length;i++){
     //    var date = data[i]['date'].split('-')
     //    var parsedDate = new Date(date[2], date[0]-1, date[1])

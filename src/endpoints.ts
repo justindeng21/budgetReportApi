@@ -141,6 +141,8 @@ api.app.post("/createUser",jsonParser,function(req: Request, res: Response){
 api.app.post("/importExpenses",jsonParser,function(req: Request, res: Response){
     let data = JSON.parse(req.body.data)
     let values = ''
+
+    console.log(data)
     //for(var i = 0; i < data.length;i++){
     //    var date = data[i]['date'].split('-')
     //    var parsedDate = new Date(date[2], date[0]-1, date[1])
