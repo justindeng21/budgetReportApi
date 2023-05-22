@@ -11,8 +11,8 @@ header = {
 
  
 
-#url = 'https://budgetreportapi.herokuapp.com'
-url = 'http://localhost:3400'
+url = 'https://budgetreportapi.herokuapp.com'
+#url = 'http://localhost:3400'
 #response = requests.get(url+'/reset',headers=header)
 
 
