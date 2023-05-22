@@ -97,7 +97,6 @@ api.app.get("/monthlyExpenses",function(req: Request, res: Response){
             res.end(JSON.stringify(rows))
         })
     }
-
 })
 
 
@@ -140,19 +139,23 @@ api.app.post("/createUser",jsonParser,function(req: Request, res: Response){
 
 api.app.post("/importExpenses",jsonParser,function(req: Request, res: Response){
     let data = req.body.data
+    let authToken = req.headers.cookie?.split('=')
     let values = ''
 
-    console.log(data)
-    for(var i = 0; i < data.length;i++){
-        var date = data[i]['date'].split('-')
-        var parsedDate = new Date(date[2], date[0]-1, date[1])
-        values += `(1,'${parsedDate.toISOString().slice(0,10)} 00:00:00','${data[i]['value']}','${data[i]['description'].replace('\'','_')}')`
-        if(i != data.length-1){
-            values += ','
+
+    if(authToken !== undefined){
+        for(var i = 0; i < data.length;i++){
+            var date = data[i]['date'].split('-')
+            var parsedDate = new Date(date[2], date[0]-1, date[1])
+            values += `(${validateToken(authToken[1])},'${parsedDate.toISOString().slice(0,10)} 00:00:00','${data[i]['value']}','${data[i]['description'].replace('\'','_')}')`
+            if(i != data.length-1){
+                values += ','
+            }
         }
+    
+        api.import(values)
     }
 
-    api.import(values)
     
 
 
