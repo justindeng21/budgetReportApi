@@ -139,7 +139,7 @@ api.app.post("/createUser",jsonParser,function(req: Request, res: Response){
 })
 
 api.app.post("/importExpenses",jsonParser,function(req: Request, res: Response){
-    let data = JSON.parse(req.body.data)
+    let data = req.body.data
     let values = ''
 
     console.log(data)
