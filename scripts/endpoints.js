@@ -15,6 +15,16 @@ function validateToken(authtoken) {
         return 'invalidToken';
     }
 }
+function deleteKey(authtoken) {
+    let userKey = server_1.passwordManager.getHash(masterkey + authtoken);
+    try {
+        delete userKeys[userKey];
+    }
+    catch (_a) {
+        return 'invalidToken';
+    }
+    return;
+}
 api.app.post("/createReport", backend_1.jsonParser, function (req, res) {
     var _a;
     let authToken = (_a = req.headers.cookie) === null || _a === void 0 ? void 0 : _a.split('=');
@@ -135,6 +145,8 @@ api.app.get("/endSession", backend_1.jsonParser, function (req, res) {
     if (authToken !== undefined) {
         console.log(validateToken(authToken[1]));
         console.log(userKeys);
+        deleteKey(authToken[0]);
+        console.log('user key deleted', userKeys);
     }
     res.sendStatus(204);
 });

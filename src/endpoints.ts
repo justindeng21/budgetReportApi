@@ -28,6 +28,17 @@ function validateToken(authtoken : string){
     
 }
 
+function deleteKey(authtoken : string){
+    let userKey = passwordManager.getHash(masterkey + authtoken);
+    try{
+        delete userKeys[userKey]
+    }
+    catch{
+        return 'invalidToken'
+    }
+    return
+}
+
 
 api.app.post("/createReport", jsonParser, function(req: Request, res: Response){
     let authToken = req.headers.cookie?.split('=')
@@ -201,9 +212,11 @@ api.app.get("/endSession",jsonParser,function(req: Request, res: Response){
     if(authToken !== undefined){
         console.log(validateToken(authToken[1]))
         console.log(userKeys)
+        deleteKey(authToken[0])
+        console.log('user key deleted',userKeys)
+
     }
 
-    
 
 
     res.sendStatus(204);
