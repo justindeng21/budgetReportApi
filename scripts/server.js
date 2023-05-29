@@ -88,7 +88,7 @@ class monthlyBudgetTable extends backend_1.Database {
         var datetime = new Date();
         var startDate = new Date(datetime.getFullYear(), datetime.getMonth(), 1).toISOString().slice(0, 10);
         var endDate = datetime.toISOString().slice(0, 10);
-        var query = `SELECT * FROM expenses WHERE transactionDate BETWEEN '${startDate} 00:00:00' AND '${endDate} 23:59:59' AND userID = ${userID} ;`;
+        var query = `SELECT * FROM expenses WHERE transactionDate BETWEEN '${startDate} 00:00:00' AND '${endDate} 23:59:59' AND userID = ${userID} AND expense < 0;`;
         return this._query(query);
     }
     queryBudgetReport(userID) {

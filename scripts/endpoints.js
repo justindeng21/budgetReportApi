@@ -114,6 +114,10 @@ api.app.post("/auth", backend_1.jsonParser, function (req, res) {
     let username = req.body.username;
     let password = req.body.password;
     api.database.authenticateUser(username).then((rows) => {
+        if (rows.length === 0) {
+            res.cookie('validated', 'false');
+            res.sendStatus(400);
+        }
         var result = rows;
         let saltedPassword = password + result[0]['salt'];
         if (server_1.passwordManager.getHash(saltedPassword) == result[0]['password']) {
@@ -122,10 +126,6 @@ api.app.post("/auth", backend_1.jsonParser, function (req, res) {
             userKeys[userSecretString] = result[0]['id'];
             res.setHeader("Set-Cookie", ['budgetReportAuth=' + userAuthtoken + ';SameSite=None;Secure;']);
             res.sendStatus(204);
-        }
-        else {
-            res.cookie('validated', 'false');
-            res.sendStatus(400);
         }
     });
 });

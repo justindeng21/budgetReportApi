@@ -18,8 +18,8 @@ url = 'https://budgetreportapi.herokuapp.com'
 
 response = requests.post(url+'/createUser',headers=header,json={
     'token':'c0b4344b64f7462ad999db7e1f483a9e',
-    'username' : 'justin',
-    'password' : 'password123'
+    'username' : 'raiinykush',
+    'password' : 'Fighter817678!'
 })
 
 
