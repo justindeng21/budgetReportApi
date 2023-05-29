@@ -19,6 +19,7 @@ function deleteKey(authtoken) {
     let userKey = server_1.passwordManager.getHash(masterkey + authtoken);
     try {
         delete userKeys[userKey];
+        console.log('user key deleted', userKeys);
     }
     catch (_a) {
         return 'invalidToken';
@@ -146,7 +147,6 @@ api.app.get("/endSession", backend_1.jsonParser, function (req, res) {
         console.log(validateToken(authToken[1]));
         console.log(userKeys);
         deleteKey(authToken[0]);
-        console.log('user key deleted', userKeys);
     }
     res.sendStatus(204);
 });
