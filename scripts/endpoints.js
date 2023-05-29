@@ -129,21 +129,12 @@ api.app.post("/auth", backend_1.jsonParser, function (req, res) {
         }
     });
 });
-api.app.post("/importExpenses", backend_1.jsonParser, function (req, res) {
+api.app.get("/endSession", backend_1.jsonParser, function (req, res) {
     var _a;
-    let data = req.body.data;
     let authToken = (_a = req.headers.cookie) === null || _a === void 0 ? void 0 : _a.split('=');
-    let values = '';
     if (authToken !== undefined) {
-        for (var i = 0; i < data.length; i++) {
-            var date = data[i]['date'].split('-');
-            var parsedDate = new Date(date[2], date[0] - 1, date[1]);
-            values += `(${validateToken(authToken[1])},'${parsedDate.toISOString().slice(0, 10)} 00:00:00','${data[i]['value']}','${data[i]['description'].replace('\'', '_')}')`;
-            if (i != data.length - 1) {
-                values += ',';
-            }
-        }
-        api.import(values);
+        console.log(validateToken(authToken[1]));
+        console.log(userKeys);
     }
     res.sendStatus(204);
 });

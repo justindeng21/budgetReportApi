@@ -194,23 +194,13 @@ api.app.post("/auth",jsonParser,function(req: Request, res: Response){
 
 
 
-api.app.post("/importExpenses",jsonParser,function(req: Request, res: Response){
-    let data = req.body.data
+api.app.get("/endSession",jsonParser,function(req: Request, res: Response){
     let authToken = req.headers.cookie?.split('=')
-    let values = ''
 
 
     if(authToken !== undefined){
-        for(var i = 0; i < data.length;i++){
-            var date = data[i]['date'].split('-')
-            var parsedDate = new Date(date[2], date[0]-1, date[1])
-            values += `(${validateToken(authToken[1])},'${parsedDate.toISOString().slice(0,10)} 00:00:00','${data[i]['value']}','${data[i]['description'].replace('\'','_')}')`
-            if(i != data.length-1){
-                values += ','
-            }
-        }
-    
-        api.import(values)
+        console.log(validateToken(authToken[1]))
+        console.log(userKeys)
     }
 
     
