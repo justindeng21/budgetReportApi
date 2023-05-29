@@ -147,6 +147,7 @@ api.app.get("/endSession", backend_1.jsonParser, function (req, res) {
         console.log(validateToken(authToken[1]));
         console.log(userKeys);
         deleteKey(authToken[0]);
+        console.log(userKeys);
     }
     res.sendStatus(204);
 });

@@ -214,7 +214,7 @@ api.app.get("/endSession",jsonParser,function(req: Request, res: Response){
         console.log(validateToken(authToken[1]))
         console.log(userKeys)
         deleteKey(authToken[0])
-        
+        console.log(userKeys)
 
     }
 
