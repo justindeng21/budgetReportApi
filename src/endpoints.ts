@@ -13,7 +13,7 @@ interface userKeyDict  {
     [key : string] : string
 }
 
-const userKeys : userKeyDict = {};
+var userKeys : userKeyDict = {};
 
 
 

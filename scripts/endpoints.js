@@ -5,7 +5,7 @@ const backend_1 = require("./backend");
 let api;
 api = new server_1.financeServer();
 let masterkey = server_1.passwordManager.getHash(server_1.passwordManager.getRandomString(10));
-const userKeys = {};
+var userKeys = {};
 function validateToken(authtoken) {
     let userKey = server_1.passwordManager.getHash(masterkey + authtoken);
     try {
