@@ -32,7 +32,7 @@ function deleteKey(authtoken : string){
     let userKey = passwordManager.getHash(masterkey + authtoken);
     try{
         delete userKeys[userKey]
-        console.log('user key deleted',userKeys)
+        console.log(userKeys[userKey])
     }
     catch{
         return 'invalidToken'

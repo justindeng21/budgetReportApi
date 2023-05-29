@@ -19,7 +19,7 @@ function deleteKey(authtoken) {
     let userKey = server_1.passwordManager.getHash(masterkey + authtoken);
     try {
         delete userKeys[userKey];
-        console.log('user key deleted', userKeys);
+        console.log(userKeys[userKey]);
     }
     catch (_a) {
         return 'invalidToken';
