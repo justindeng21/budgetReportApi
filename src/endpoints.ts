@@ -176,6 +176,7 @@ api.app.post("/auth",jsonParser,function(req: Request, res: Response){
 
         if(rows.length === 0){
             res.cookie('validated','false')
+            console.log('DB lookup')
             res.sendStatus(400);
             return;
         }

@@ -116,6 +116,7 @@ api.app.post("/auth", backend_1.jsonParser, function (req, res) {
     api.database.authenticateUser(username).then((rows) => {
         if (rows.length === 0) {
             res.cookie('validated', 'false');
+            console.log('DB lookup');
             res.sendStatus(400);
             return;
         }
