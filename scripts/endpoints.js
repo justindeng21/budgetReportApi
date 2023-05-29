@@ -117,6 +117,7 @@ api.app.post("/auth", backend_1.jsonParser, function (req, res) {
         if (rows.length === 0) {
             res.cookie('validated', 'false');
             res.sendStatus(400);
+            return;
         }
         var result = rows;
         let saltedPassword = password + result[0]['salt'];
