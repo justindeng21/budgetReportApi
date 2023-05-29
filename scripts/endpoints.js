@@ -120,16 +120,32 @@ api.app.post("/auth", backend_1.jsonParser, function (req, res) {
             res.sendStatus(400);
             return;
         }
-        var result = rows;
-        let saltedPassword = password + result[0]['salt'];
-        if (server_1.passwordManager.getHash(saltedPassword) == result[0]['password']) {
+        else if (server_1.passwordManager.getHash(password + rows[0]['salt']) == rows[0]['password']) {
             let userAuthtoken = server_1.passwordManager.getHash(server_1.passwordManager.getRandomString(10));
             let userSecretString = server_1.passwordManager.getHash(masterkey + userAuthtoken);
-            userKeys[userSecretString] = result[0]['id'];
+            userKeys[userSecretString] = rows[0]['id'];
             res.setHeader("Set-Cookie", ['budgetReportAuth=' + userAuthtoken + ';SameSite=None;Secure;']);
             res.sendStatus(204);
         }
     });
+});
+api.app.post("/importExpenses", backend_1.jsonParser, function (req, res) {
+    var _a;
+    let data = req.body.data;
+    let authToken = (_a = req.headers.cookie) === null || _a === void 0 ? void 0 : _a.split('=');
+    let values = '';
+    if (authToken !== undefined) {
+        for (var i = 0; i < data.length; i++) {
+            var date = data[i]['date'].split('-');
+            var parsedDate = new Date(date[2], date[0] - 1, date[1]);
+            values += `(${validateToken(authToken[1])},'${parsedDate.toISOString().slice(0, 10)} 00:00:00','${data[i]['value']}','${data[i]['description'].replace('\'', '_')}')`;
+            if (i != data.length - 1) {
+                values += ',';
+            }
+        }
+        api.import(values);
+    }
+    res.sendStatus(204);
 });
 api.app.get("(/*)", function (req, res) {
     const response = {
